@@ -1,5 +1,7 @@
 # Use a specific Ubuntu base image
-FROM ubuntu:24.04
+#FROM ubuntu:24.04
+FROM python:3.9.21-slim-bookworm
+
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -34,6 +36,11 @@ RUN chmod 600 /home/ubuntu/.ssh/authorized_keys && \
 USER ubuntu
 #COPY requirements.txt /tmp/requirements.txt
 #RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+
+# Add a volume directory and set correct permissions
+USER root
+RUN mkdir -p /home/work && chown -R ubuntu:ubuntu /home/work
+
 
 EXPOSE ${SSH_PORT}
 
